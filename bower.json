@@ -6,7 +6,8 @@
     "app-layout": "PolymerElements/app-layout#^0.10.4",
     "app-route": "PolymerElements/app-route#^0.9.2",
     "iron-pages": "PolymerElements/iron-pages#^1.0.8",
-    "google-analytics": "stefanmerkel/google-analytics"
+    "google-analytics": "stefanmerkel/google-analytics",
+    "iron-media-query": "PolymerElements/iron-media-query#^1.0.8"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
