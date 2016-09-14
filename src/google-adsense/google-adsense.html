@@ -1,0 +1,39 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="google-adsense">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+        </style>
+
+    </template>
+    <script>
+        Polymer({
+            is: 'google-adsense',
+
+            ready: function() {
+                var body = document.body,
+                    script = document.createElement("script"),
+                    insAds = document.createElement("ins"),
+                    adsbygoogle = document.createElement("script");
+
+                insAds.setAttribute('class', 'adsbygoogle');
+                insAds.setAttribute('style', 'display:inline-block;width:728px;height:90px');
+                insAds.setAttribute('data-ad-client', 'ca-pub-1606236884023287');
+                insAds.setAttribute('data-ad-slot', '6508656857');
+
+                script.setAttribute("type", "text/javascript");
+                script.setAttribute("src", "//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js");
+                script.setAttribute("async", true);
+
+                adsbygoogle.innerText = '(adsbygoogle = window.adsbygoogle || []).push({});';
+
+                this.appendChild(insAds);
+                body.appendChild(script);
+                body.appendChild(adsbygoogle);
+            },
+        });
+    </script>
+</dom-module>

@@ -1,0 +1,129 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/app-route/app-location.html">
+<link rel="import" href="../../bower_components/app-route/app-route.html">
+<link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../../bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="../../bower_components/app-layout/app-box/app-box.html">
+<link rel="import" href="../../bower_components/google-analytics/google-analytics.html">
+
+<dom-module id="smerkel-com">
+    <template>
+        <style>
+            :host {
+                display: block;
+                position: relative;
+                min-height: 100vh;
+                --app-primary-color: #202020;
+                --app-secondary-color: #757575;
+                --app-accent-color: #172C50;
+                --paper-button-ink-color: var(--app-accent-color);
+                --paper-icon-button-ink-color: var(--app-accent-color);
+                --paper-spinner-color: var(--app-accent-color);
+                -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+                color: var(--app-primary-color);
+            }
+
+            app-toolbar {
+                font-size: 18px;
+                font-weight: 400;
+                letter-spacing: 5px;
+                text-align: center;
+                color: #1a237e;
+            }
+
+            .header {
+                background-color: white;
+                height: 128px;
+            }
+
+            .nav {
+                height: 64px;
+                margin: 0;
+                padding: 0;
+                text-align: center;
+                background-color: rgba(255, 255, 255, 0.8);
+            }
+
+            .nav li {
+                display: inline-block;
+                list-style: none;
+            }
+
+            .nav a {
+                display: inline-block;
+                font-weight: 12px;
+                line-height: 64px;
+                text-decoration: none;
+                color: black;
+                font-weight: 300;
+                margin: 0 10px;
+            }
+
+            .nav a:hover {
+                color: #444;
+                border-bottom: 1px solid #999;
+            }
+        </style>
+
+        <google-analytics key="UA-84137412-1"></google-analytics>
+
+        <app-location route="{{_route}}"></app-location>
+        <app-route
+            route="[[_route]]"
+            pattern="/:page"
+            data="{{_routeData}}"
+            tail="{{_routeTail}}"></app-route>
+
+        <div class="header">
+            <app-toolbar>
+                <div main-title>smerkel.com</div>
+            </app-toolbar>
+            <app-box threshold="64">
+                <ul role="navigation" class="nav">
+                    <li><a href="/">Home</a></li>
+                </ul>
+            </app-box>
+        </div>
+
+        <google-adsense></google-adsense>
+
+        <iron-pages
+            id="_ironPages"
+            selected="[[_page]]"
+            attr-for-selected="name"
+            fallback-selection="docker">
+
+            <home-page id="home" name="home"></home-page>
+        </iron-pages>
+
+
+    </template>
+    <script>
+        // performance logging
+        //window.performance && performance.mark && performance.mark('smerkel-com - before register');
+
+        Polymer({
+            is: 'smerkel-com',
+            properties: {
+                _page: {
+                    type: String,
+                    observer: "_pageChanged"
+                }
+            },
+
+            observers: [
+                "_routePageChanged(_routeData.page)"
+            ],
+
+            _pageChanged: function(page) {
+                var tagName = this.$._ironPages.querySelector("#" + page).tagName;
+                var url = "../pages/" + tagName + "/" + tagName + ".html";
+                this.importHref(this.resolveUrl(url.toLowerCase(), null, null, true));
+            },
+
+            _routePageChanged: function (page) {
+                this._page = page || "home";
+            }
+        });
+    </script>
+</dom-module>
